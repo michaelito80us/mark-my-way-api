@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  duration: 1
+  start_lat: 1.5
+  start_lon: 1.5
+  status: MyString
+  current_stop: 1
+
+two:
+  duration: 1
+  start_lat: 1.5
+  start_lon: 1.5
+  status: MyString
+  current_stop: 1
