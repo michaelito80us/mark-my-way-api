@@ -110,6 +110,8 @@ GEM
     msgpack (1.4.2)
     netrc (0.11.0)
     nio4r (2.5.7)
+    nokogiri (1.11.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.11.3-x86_64-linux)
       racc (~> 1.4)
     pg (1.2.3)
@@ -215,6 +217,7 @@ GEM
     zeitwerk (2.4.2)
 
 PLATFORMS
+  x86_64-darwin-20
   x86_64-linux
 
 DEPENDENCIES
@@ -225,6 +228,7 @@ DEPENDENCIES
   geocoder
   jbuilder (~> 2.7)
   listen (~> 3.2)
+  nokogiri
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.6)
