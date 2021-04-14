@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_145313) do
+ActiveRecord::Schema.define(version: 2021_04_14_030537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2021_04_12_145313) do
     t.integer "visit_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "introduction"
+    t.float "total_time"
   end
 
   create_table "trip_stops", force: :cascade do |t|
@@ -44,6 +46,12 @@ ActiveRecord::Schema.define(version: 2021_04_12_145313) do
     t.float "start_lon"
     t.string "status"
     t.integer "current_stop"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "open_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -6,8 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 def ms(m)
-  return m*60000
+  # return m*60000
+  return m
   end
+
 stops = Stop.create([
   {name:'Majestic Theater', address:'99江宁路', lon:'121.4516', lat:'31.2315',visit_time: ms(30),category:'Entertainment', photo1:'https://fastly.4sqi.net/img/general/width960/131516486_11s3tgdMwqYT7JTZKkU6hEbNPM1eRaKItWWNqRVtwb8.jpg', photo2:'https://ak-d.tripcdn.com/images/0105q120008h6vyufDF5C_C_760_506.jpg', photo3: 'https://ak-d.tripcdn.com/images/0106e120008h6xh84119A_C_760_506.jpg'},
   {name: 'WestGate Mall', address:'1038南京西路', lon:'121.4522', lat:'31.2309', visit_time:ms(20), category:'Shopping', photo1:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/201907_Westgate_Mall_Shanghai.jpg/3584px-', photo2:'https://www.smartshanghai.com/uploads/repository/2020/07/31/a0d89a52-a6cd-4612-b413-a7f5e6f9366e.jpeg', photo3:'https://www.smartshanghai.com/uploads/repository/2020/07/22/5add2df3-1ab6-41fa-8ab3-5c9b96994525.jpeg'},
