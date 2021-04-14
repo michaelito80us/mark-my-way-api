@@ -1,4 +1,5 @@
 class Api::V1::TripsController < Api::V1::BaseController
+  before_action :set_trip, only: %i[update]
   # def index
   #   @stories = Story.all
   #   render json: @stories #Just for testing
@@ -6,7 +7,7 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def create
     @trip = Trip.new(trip_params)
-    @trip.status = "open"
+    @trip.active = true
     @trip.user = User.find(params[:user_id])
     if @trip.save
       @my_trip = calculate_trip
@@ -18,6 +19,20 @@ class Api::V1::TripsController < Api::V1::BaseController
       render_error(@trip)
     end
   end
+
+  def show
+    @user = User.find(params[:user_id])
+    @trip = @user.trips.last if @user.trips.last.active == true
+  end
+
+  def update
+    if @trip.update(trip_params)
+      render json: { msg: 'Updated' }
+    else
+      render_error(@trip)
+    end
+  end
+  
 
   def calculate_trip
     point_lat = @trip.start_lan
@@ -33,10 +48,10 @@ class Api::V1::TripsController < Api::V1::BaseController
     # average human walking speed 83 mts / min
     walking_speed = 83
 
-    # create the origin stop 
+    # create the origin stop - where the user is when he creates the trip 
     @stop0 = Stop.new(lat: start_lat, lon: start_lon)
 
-    # initialize the trip array - array of instances of stops add origin to the array
+    # initialize the trip arrays - array of instances of stops add origin to the array and array of ID's of stops
     @my_trip = []
     @my_trip << @stop0
     @my_trip_id = []
@@ -57,7 +72,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       # ********* this asumes the origin is not a location on our database.
       #  need to optimize this to check if it's in the databse ************
       @my_trip.each do |stop|
-        puts "my_trip stop ID = #{stop.id}"
+        # puts "my_trip stop ID = #{stop.id}"
         locations = locations.reject { |location| location.id == stop.id }
       end
 
@@ -107,6 +122,10 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def trip_params
     params.require(:trip).permit(:duration, :start_lat, :start_lon, :status, :user_id)
+  end
+
+  def set_trip
+    @trip = Trip.find(params[:id])
   end
   
 end
