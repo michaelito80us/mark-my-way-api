@@ -10,7 +10,7 @@ class Api::V1::TripsController < Api::V1::BaseController
     start_lon = params[:lon]
     trip_time_mins = params[:trip_time]
     
-### for testing only ###
+    ### for testing only ###
     start_lat = 31.2288438
     start_lon = 121.4753802
     trip_time_mins = 200
@@ -31,6 +31,7 @@ class Api::V1::TripsController < Api::V1::BaseController
     # initialize the trip array - array of instances of stops add origin to the array
     @my_trip = []
     @my_trip << @stop0
+    @my_trip_id = []
 
     puts "*>*>*>*>*>*>*>*>*>*>*>\nremaining time: #{remaining_time_mins}"
 
@@ -69,7 +70,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       small_list = locations.reject { |location| location.total_time > remaining_time_mins.to_f }
       
       
-      ### sort by the result by shortest total time
+      ### sort the result by shortest total time
       sorted_locs = small_list.sort_by(&:total_time)
 
       
@@ -92,34 +93,27 @@ class Api::V1::TripsController < Api::V1::BaseController
         next_stop = sorted_locs[rand(0...n)]  #<<<<<<<<<<<<  need to make sure that if n=0 then the program
 
         @my_trip << next_stop
+        @my_trip_id << next_stop.id
 
         point_lat = next_stop.lat
         point_lon = next_stop.lon
+        puts "*********************"
+        puts "next stop name: #{next_stop.name}"
       end
       
       
       # the real time it takes to get to and visit the stop = walk_time + visit_time
       remaining_time_mins -= next_stop.total_time
-      puts "*********************"
-      puts "next stop name: #{next_stop.name}"
       puts "remaining time: #{remaining_time_mins}"
       puts "*********************"
     end
 
     puts @my_trip
+    puts @my_trip_id
     
   end
 
-  def test_start
-    ### for testing only ###
-    start_lat = 31.2288438
-    start_lon = 121.4753802
-    trip_time_mins = 400
-    #########################
-
-    walking_speed = 83
-  end
-
+ 
   def array_of_locs
     Stop.all    
   end
