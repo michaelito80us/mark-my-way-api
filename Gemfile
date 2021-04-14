@@ -27,6 +27,8 @@ gem 'nokogiri'
 gem 'rest-client'
 gem 'dotenv-rails'
 gem 'geocoder'
+gem 'activestorage-aliyun'
+gem 'image_processing'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

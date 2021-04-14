@@ -6,9 +6,23 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def create
 
-    start_lat = params[:lat]
-    start_lon = params[:lon]
-    trip_time_mins = params[:trip_time]
+    @trip = Trip.new(trip_params)
+    @trip.status = "open"
+    if @trip.save
+      @my_trip = calculate_trip()
+      #####function to add the stops
+      
+      render json: { msg: "Created" }
+    else
+      render_error(@trip)
+    end
+
+  end
+
+  def calculate_trip
+    start_lat = @trip.start_lan
+    start_lon = @trip.start_lon
+    trip_time_mins = @trip.duration
     
     ### for testing only ###
     start_lat = 31.2288438
@@ -118,5 +132,9 @@ class Api::V1::TripsController < Api::V1::BaseController
     Stop.all    
   end
   
+  private
+    def trip_params
+      params.require(:trip).permit(:duration, :start_lat, :start_lon, :status)
+    end
   
 end
