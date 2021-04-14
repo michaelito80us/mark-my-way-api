@@ -104,7 +104,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       puts "sorted locs size = #{n}"
       puts "sorted locs: #{sorted_locs}"
       if n != 0
-        next_stop = sorted_locs[rand(0...n)]  #<<<<<<<<<<<<  need to make sure that if n=0 then the program
+        next_stop = sorted_locs[rand(0...n)]
 
         @my_trip << next_stop
         @my_trip_id << next_stop.id
@@ -115,21 +115,16 @@ class Api::V1::TripsController < Api::V1::BaseController
         puts "next stop name: #{next_stop.name}"
       end
       
-      
-      # the real time it takes to get to and visit the stop = walk_time + visit_time
       remaining_time_mins -= next_stop.total_time
+
       puts "remaining time: #{remaining_time_mins}"
       puts "*********************"
     end
 
     puts @my_trip
     puts @my_trip_id
+    return @my_trip_id
     
-  end
-
- 
-  def array_of_locs
-    Stop.all    
   end
   
   private
