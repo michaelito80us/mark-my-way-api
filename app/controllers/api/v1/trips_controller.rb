@@ -6,9 +6,23 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def create
 
-    start_lat = params[:lat]
-    start_lon = params[:lon]
-    trip_time_mins = params[:trip_time]
+    @trip = Trip.new(trip_params)
+    @trip.status = "open"
+    if @trip.save
+      @my_trip = calculate_trip()
+      #####function to add the stops
+      
+      render json: { msg: "Created" }
+    else
+      render_error(@trip)
+    end
+
+  end
+
+  def calculate_trip
+    start_lat = @trip.start_lan
+    start_lon = @trip.start_lon
+    trip_time_mins = @trip.duration
     
     ### for testing only ###
     start_lat = 31.2288438
@@ -90,7 +104,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       puts "sorted locs size = #{n}"
       puts "sorted locs: #{sorted_locs}"
       if n != 0
-        next_stop = sorted_locs[rand(0...n)]  #<<<<<<<<<<<<  need to make sure that if n=0 then the program
+        next_stop = sorted_locs[rand(0...n)]
 
         @my_trip << next_stop
         @my_trip_id << next_stop.id
@@ -101,22 +115,21 @@ class Api::V1::TripsController < Api::V1::BaseController
         puts "next stop name: #{next_stop.name}"
       end
       
-      
-      # the real time it takes to get to and visit the stop = walk_time + visit_time
       remaining_time_mins -= next_stop.total_time
+
       puts "remaining time: #{remaining_time_mins}"
       puts "*********************"
     end
 
     puts @my_trip
     puts @my_trip_id
+    return @my_trip_id
     
   end
-
- 
-  def array_of_locs
-    Stop.all    
-  end
   
+  private
+    def trip_params
+      params.require(:trip).permit(:duration, :start_lat, :start_lon, :status)
+    end
   
 end
