@@ -7,12 +7,13 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def create
     @trip = Trip.new(trip_params)
+    @trip.current_stop = 0
     @trip.active = true
     @trip.user = User.find(params[:user_id])
     if @trip.save
-      @my_trip_id = calculate_trip
-      @my_trip_id.each do |id|
-        Trip_stop.create(trip_id: @trip.id, stop_id: id)
+      @my_trip = calculate_trip
+      @my_trip.each do |stop|
+        TripStop.create(stop: stop, trip: @trip)
       end
       render json: { msg: 'Created' }
     else
@@ -51,7 +52,7 @@ class Api::V1::TripsController < Api::V1::BaseController
     # initialize the trip arrays - array of instances of stops add origin to the array and array of ID's of stops
     @my_trip = []
     @my_trip << @stop0
-    @my_trip_id = []
+    
 
     puts "*>*>*>*>*>*>*>*>*>*>*>\noriginal remaining time: #{remaining_time_mins}\n*>*>*>*>*>*>*>*>*>*>*>"
 
@@ -98,7 +99,7 @@ class Api::V1::TripsController < Api::V1::BaseController
         next_stop = sorted_locs[rand(0...n)]
 
         @my_trip << next_stop
-        @my_trip_id << next_stop.id
+        
 
         # set the new location as starting point for the next search
         point_lat = next_stop.lat
@@ -112,13 +113,13 @@ class Api::V1::TripsController < Api::V1::BaseController
       puts "remaining time: #{remaining_time_mins}"
       puts '*********************'
     end
-    @my_trip_id
+    @my_trip
   end
 
   private
 
   def trip_params
-    params.require(:trip).permit(:duration, :start_lat, :start_lon, :status, :user_id)
+    params.require(:trip).permit(:duration, :start_lat, :start_lon, :user_id)
   end
 
   def set_trip

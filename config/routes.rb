@@ -7,7 +7,7 @@ post '/login', to: 'login#login'
 namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :trips, only: %i[create show update]
-      resources :stops, only: %i[show]
+      resources :stops, only: %i[show update]
 
     end
   end
