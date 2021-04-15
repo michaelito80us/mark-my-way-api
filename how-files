@@ -1,0 +1,35 @@
+[1mdiff --git a/Dockerfile b/Dockerfile[m
+[1mindex 680cabc..d63a9e8 100644[m
+[1m--- a/Dockerfile[m
+[1m+++ b/Dockerfile[m
+[36m@@ -16,7 +16,6 @@[m [mCOPY yarn.lock /tmp/[m
+ WORKDIR /tmp[m
+ RUN gem install bundler -v 2.2.11[m
+ RUN bundle install --jobs 5 --retry 5 --without development test[m
+[31m-RUN yarn install # not needed for APIs[m
+ RUN mkdir /app[m
+ WORKDIR /app[m
+ COPY . /app[m
+[1mdiff --git a/app/controllers/api/v1/trips_controller.rb b/app/controllers/api/v1/trips_controller.rb[m
+[1mindex 3ecdc37..3dffdea 100644[m
+[1m--- a/app/controllers/api/v1/trips_controller.rb[m
+[1m+++ b/app/controllers/api/v1/trips_controller.rb[m
+[36m@@ -12,7 +12,7 @@[m [mclass Api::V1::TripsController < Api::V1::BaseController[m
+     if @trip.save[m
+       @my_trip = calculate_trip[m
+       @my_trip.each do |id|[m
+[31m-        Trip_stop.create(trip_id: @trip.id, stop_id: id)[m
+[32m+[m[32m        Tripstop.create(trip_id: @trip.id, stop_id: id)[m
+       end[m
+       render json: { msg: 'Created' }[m
+     else[m
+[36m@@ -54,8 +54,7 @@[m [mclass Api::V1::TripsController < Api::V1::BaseController[m
+     # initialize the trip arrays - array of instances of stops add origin to the array and array of ID's of stops[m
+     @my_trip = [][m
+     @my_trip << @stop0[m
+[31m-    @my_trip_id = [][m
+[31m-[m
+[32m+[m[41m    [m
+     puts "*>*>*>*>*>*>*>*>*>*>*>\noriginal remaining time: #{remaining_time_mins}\n*>*>*>*>*>*>*>*>*>*>*>"[m
+ [m
+     while remaining_time_mins.positive?[m
