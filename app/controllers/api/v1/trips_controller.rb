@@ -1,5 +1,5 @@
 class Api::V1::TripsController < Api::V1::BaseController
-  before_action :set_trip, only: %i[update]
+  before_action :set_trip, only: %i[update show]
   # def index
   #   @stories = Story.all
   #   render json: @stories #Just for testing
@@ -10,8 +10,8 @@ class Api::V1::TripsController < Api::V1::BaseController
     @trip.active = true
     @trip.user = User.find(params[:user_id])
     if @trip.save
-      @my_trip = calculate_trip
-      @my_trip.each do |id|
+      @my_trip_id = calculate_trip
+      @my_trip_id.each do |id|
         Trip_stop.create(trip_id: @trip.id, stop_id: id)
       end
       render json: { msg: 'Created' }
@@ -21,8 +21,6 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def show
-    @user = User.find(params[:user_id])
-    @trip = @user.trips.last if @user.trips.last.active == true
   end
 
   def update
@@ -32,7 +30,6 @@ class Api::V1::TripsController < Api::V1::BaseController
       render_error(@trip)
     end
   end
-  
 
   def calculate_trip
     point_lat = @trip.start_lan
