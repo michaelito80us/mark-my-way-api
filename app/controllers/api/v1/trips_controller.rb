@@ -12,8 +12,10 @@ class Api::V1::TripsController < Api::V1::BaseController
     @trip.user = User.find(params[:user_id])
     if @trip.save
       @my_trip = calculate_trip
+      puts @my_trip
       @my_trip.each do |stop|
-        TripStop.create(stop: stop, trip: @trip)
+        TripStop.create(stop_id: stop.id, trip: @trip)
+        
       end
       render json: { msg: 'Created' }
     else
@@ -22,6 +24,8 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def show
+    p 'here'
+    p @trip
   end
 
   def update
@@ -33,7 +37,7 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def calculate_trip
-    point_lat = @trip.start_lan
+    point_lat = @trip.start_lat
     point_lon = @trip.start_lon
     remaining_time_mins = @trip.duration
 
@@ -47,7 +51,8 @@ class Api::V1::TripsController < Api::V1::BaseController
     walking_speed = 83
 
     # create the origin stop - where the user is when he creates the trip 
-    @stop0 = Stop.new(lat: start_lat, lon: start_lon)
+    @stop0 = Stop.create(lat: point_lat, lon: point_lon)
+    puts @stop0
 
     # initialize the trip arrays - array of instances of stops add origin to the array and array of ID's of stops
     @my_trip = []
@@ -70,7 +75,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       # ********* this asumes the origin is not a location on our database.
       #  need to optimize this to check if it's in the databse ************
       @my_trip.each do |stop|
-        # puts "my_trip stop ID = #{stop.id}"
+        puts "stop ID = #{stop.id}"
         locations = locations.reject { |location| location.id == stop.id }
       end
 
@@ -113,6 +118,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       puts "remaining time: #{remaining_time_mins}"
       puts '*********************'
     end
+    @stop0.destroy
     @my_trip
   end
 
