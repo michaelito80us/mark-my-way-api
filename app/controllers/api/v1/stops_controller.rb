@@ -8,6 +8,7 @@ before_action :set_stop, only: [:edit, :show, :update]
 
   def show
     @stop = Stop.find(params[:id])
+    @photos = [@stop.photo1, @stop.photo2, @stop.photo3]
   end
 
   def create
@@ -29,7 +30,7 @@ before_action :set_stop, only: [:edit, :show, :update]
   private
 
   def stop_params
-    params.require(:stop).permit(:lat, :lon, :name, :address, :category, :photo1, :photo2, :photo3, :visit_time, :introduction, photos:[])
+    params.require(:stop).permit(:lat, :lon, :name, :address, :category, :photo1, :photo2, :photo3, :visit_time, :introduction, images:[])
   end
 
   def set_stop

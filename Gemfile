@@ -29,6 +29,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'geocoder'
 gem 'activestorage-aliyun'
 gem 'image_processing'
+gem 'simple_form'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

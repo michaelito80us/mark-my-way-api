@@ -28,7 +28,7 @@ before_action :set_stop, only: [:edit, :show, :update]
   private
 
   def stop_params
-    params.require(:stop).permit(:lat, :lon, :name, :address, :category, :photo1, :photo2, :photo3, :visit_time, :introduction, photos:[])
+    params.require(:stop).permit(:lat, :lon, :name, :address, :category, :photo1, :photo2, :photo3, :visit_time, :introduction, images:[])
   end
 
   def set_stop
