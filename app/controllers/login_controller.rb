@@ -19,7 +19,7 @@ class LoginController < ApplicationController
 
   def login
     @user = User.find_or_create_by(open_id: wechat_user.fetch("openid"))
-    if @user.trips.last.active?
+    if !@user.trips.empty? && @user.trips.last.active?
       render json: {
         userId: @user.id,
         active_trip: @user.trips.last.id
