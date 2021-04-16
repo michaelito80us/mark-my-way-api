@@ -36,6 +36,9 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def calculate_trip
+    @stopstodelete = Stop.where(name: nil)
+    @stopstodelete.destroy_all
+
     point_lat = @trip.start_lat
     point_lon = @trip.start_lon
     remaining_time_mins = @trip.duration
