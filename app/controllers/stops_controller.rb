@@ -1,5 +1,4 @@
-class Api::V1::StopsController < Api::V1::BaseController
-
+class StopsController < ApplicationController
 before_action :set_stop, only: [:edit, :show, :update]
 
   def index
@@ -8,7 +7,6 @@ before_action :set_stop, only: [:edit, :show, :update]
 
   def show
     @stop = Stop.find(params[:id])
-    @photos = [@stop.photo1, @stop.photo2, @stop.photo3]
   end
 
   def create
