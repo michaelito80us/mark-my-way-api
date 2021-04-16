@@ -1,0 +1,10 @@
+<h1>Editing stop</h1>
+
+<%=  %>
+
+<%= simple_form_for(@stop) do |f| %>
+  
+  <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+  <%= f.button :submit %>
+  
+<% end %>

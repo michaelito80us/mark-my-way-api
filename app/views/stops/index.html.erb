@@ -1,0 +1,24 @@
+
+<h1>Stops</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stops.each do |stop1| %>
+      <tr>
+        <td><%= stop1.name %></td>
+        <td><%= link_to 'Show', stop1 %></td>
+        <td><%= link_to 'Edit', edit_stop_path(stop1) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

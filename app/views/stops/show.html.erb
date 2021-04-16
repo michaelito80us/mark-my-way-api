@@ -1,0 +1,22 @@
+<h1><%= @stop.name %></h1>
+
+<div class="row container">
+<p>id: <%= @stop.id %></p>
+<p>name: <%= @stop.name %></p>
+<p>addres: <%= @stop.address %></p>
+<p>category <%= @stop.category %></p>
+<p>latitude <%= @stop.lat %></p>
+<p>longitude <%= @stop.lon %></p>
+<p>photo1 <a href="<%= @stop.photo1 %>"><%= @stop.photo1 %></a></p>
+<p>photo2 <a href="<%= @stop.photo2 %>"><%= @stop.photo2 %></a></p>
+<p>photo3 <a href="<%= @stop.photo3 %>"><%= @stop.photo3 %></a></p>
+<p>visit time: <%= @stop.visit_time %></p>
+<p>introduction: <%= @stop.introduction %></p>
+  
+</div>
+
+<%= simple_form_for(@stop) do |f| %>
+
+  <%= f.input :images, as: :file, input_html: { multiple: true } %>
+  <%= f.button :submit %>
+<% end %>

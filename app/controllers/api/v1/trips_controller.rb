@@ -36,6 +36,9 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def calculate_trip
+    @stopstodelete = Stop.where(name: nil)
+    @stopstodelete.destroy_all
+
     point_lat = @trip.start_lat
     point_lon = @trip.start_lon
     remaining_time_mins = @trip.duration
@@ -81,9 +84,10 @@ class Api::V1::TripsController < Api::V1::BaseController
       ### find the distance between my current location and all the points in the array,
       ### calculate the total_time = walking time to each distace + the visit time.
       ### walking time [mins] = distance [mts] / 83
+      ### distance_mts is manhattan distance and not direct distance. d = direct_distance * sqr(2)
       locations.each do |location|
         location.total_time = 0
-        distance_mts = Geocoder::Calculations.distance_between([point_lat, point_lon], [location.lat, location.lon]) * 1_000
+        distance_mts = Geocoder::Calculations.distance_between([point_lat, point_lon], [location.lat, location.lon]) * 1_000 * 1.41421
         total_time = (distance_mts / walking_speed) + location.visit_time
         location.total_time = total_time
       end
