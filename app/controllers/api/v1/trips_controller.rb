@@ -9,15 +9,14 @@ class Api::V1::TripsController < Api::V1::BaseController
     @trip = Trip.new(trip_params)
     @trip.current_stop = 0
     @trip.active = true
-    @trip.user = User.find(params[:user_id])
+    # @trip.user = User.find(params[:user_id])
     if @trip.save
       @my_trip = calculate_trip
       puts @my_trip
       @my_trip.each do |stop|
         TripStop.create(stop_id: stop.id, trip: @trip)
-        
       end
-      render json: { msg: 'Created' }
+      render json: { msg: 'Created', trip_id: @trip.id }
     else
       render_error(@trip)
     end
@@ -50,14 +49,14 @@ class Api::V1::TripsController < Api::V1::BaseController
     # average human walking speed 83 mts / min
     walking_speed = 83
 
-    # create the origin stop - where the user is when he creates the trip 
+    # create the origin stop - where the user is when he creates the trip
     @stop0 = Stop.create(lat: point_lat, lon: point_lon)
     puts @stop0
 
     # initialize the trip arrays - array of instances of stops add origin to the array and array of ID's of stops
     @my_trip = []
     @my_trip << @stop0
-    
+
 
     puts "*>*>*>*>*>*>*>*>*>*>*>\noriginal remaining time: #{remaining_time_mins}\n*>*>*>*>*>*>*>*>*>*>*>"
 
@@ -105,7 +104,7 @@ class Api::V1::TripsController < Api::V1::BaseController
         next_stop = sorted_locs[rand(0...n)]
 
         @my_trip << next_stop
-        
+
 
         # set the new location as starting point for the next search
         point_lat = next_stop.lat
@@ -132,5 +131,5 @@ class Api::V1::TripsController < Api::V1::BaseController
   def set_trip
     @trip = Trip.find(params[:id])
   end
-  
+
 end
