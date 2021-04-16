@@ -1,5 +1,4 @@
-class Api::V1::StopsController < Api::V1::BaseController
-
+class StopsController < ApplicationController
 before_action :set_stop, only: [:edit, :show, :update]
 
   def index

@@ -1,0 +1,13 @@
+<h1><%= @stop.name %></h1>
+
+<div class="row container">
+  <% @stop.pictures do |plant| %>
+  <div class="col-4">
+    <%= plant.name %>
+    <%= link_to "+", plant_path(plant), method: :delete, data: { confirm: "Are you sure?" }, class: "card-remove-link" %>
+    </div>
+
+  </div>
+
+  <% end %>
+</div>
