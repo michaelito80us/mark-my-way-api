@@ -10,7 +10,7 @@ before_action :set_stop, only: [:edit, :show, :update, :destroy]
   end
 
   def create
-    stop = Stop.create!(stop_params)
+    Stop.create!(stop_params)
     redirect_to stops_path, notice: 'Stop was successfully created.'
   end
 
