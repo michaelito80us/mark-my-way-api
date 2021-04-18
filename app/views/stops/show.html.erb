@@ -20,11 +20,9 @@
     
   </div>
 
-  <%= simple_form_for(@stop) do |f| %>
-
-    <%= f.input :images, as: :file, input_html: { multiple: true } %>
-    <%= f.button :submit %>
-  <% end %>
+  <small class="text-right flex-shrink-0"><%= link_to 'delete', stop_path(@stop), method: :delete, data: { confirm: "Are you sure you want to remove #{@stop.name} from your list"}, class: 'text-danger' %></small>
+<br>
+<br>
 
   <%= link_to 'Back', stops_path %>
 </div>

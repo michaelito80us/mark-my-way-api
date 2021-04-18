@@ -1,5 +1,5 @@
 class StopsController < ApplicationController
-before_action :set_stop, only: [:edit, :show, :update]
+before_action :set_stop, only: [:edit, :show, :update, :destroy]
 
   def index
     @stops = Stop.all
@@ -11,10 +11,19 @@ before_action :set_stop, only: [:edit, :show, :update]
 
   def create
     stop = Stop.create!(stop_params)
-    redirect_to message
+    redirect_to stops_path, notice: 'Stop was successfully created.'
   end
 
   def edit
+  end
+
+  def new
+    @stop = Stop.new
+  end
+
+  def destroy
+    @stop.destroy
+    redirect_to stops_path, notice: 'Stop was successfully destroyed.'
   end
 
   def update

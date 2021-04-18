@@ -8,17 +8,19 @@
       <th></th>
     </tr>
   </thead>
-
+<% n = 1 %>
   <tbody>
     <% @stops.each do |stop1| %>
       <tr>
-        <td><%= stop1.name %></td>
+        <td><%= n %>. - <%= stop1.id %> - <%= stop1.name %></td>
         <td><%= link_to 'Show', stop1 %></td>
         <td><%= link_to 'Edit', edit_stop_path(stop1) %></td>
       </tr>
+      <% n = n + 1 %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
+<%= link_to 'New Stop', new_stop_path %>

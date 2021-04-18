@@ -1,0 +1,25 @@
+<h1>New Stop</h1>
+
+<div class="container">
+  <%= simple_form_for(@stop) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :address %>
+    <%= f.input :category %>
+    <%= f.input :lat %>
+    <%= f.input :lon %>
+    <%= f.input :visit_time %>
+    <%= f.input :introduction, as: :text %>
+    <%= f.input :photo1 %>
+    <%= f.input :photo2 %>
+    <%= f.input :photo3 %>
+    <%= f.input :images, as: :file, input_html: { multiple: true } %>
+
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+  <% end %>
+  
+</div>
+
+<%= link_to 'Back', stops_path %>

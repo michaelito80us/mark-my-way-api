@@ -15,6 +15,12 @@
   <%= f.input :photo3 %>
   <%= f.input :images, as: :file, input_html: { multiple: true } %>
 
+  <% @stop.images.each do |photo| %>
+      <%= image_tag photo, height: 300, width: 400 %>
+      <%= url_for(photo) %>
+      <%= link_to 'Delete photo', photo.purge %>
+    <% end %>
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div><% end %>
