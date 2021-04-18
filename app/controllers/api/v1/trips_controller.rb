@@ -8,7 +8,7 @@ class Api::V1::TripsController < Api::V1::BaseController
   def create
     @trip = Trip.new(trip_params)
     @trip.current_stop = 0
-    @trip.active = true
+    @trip.active = false
     # @trip.user = User.find(params[:user_id])
     if @trip.save
       @my_trip = calculate_trip

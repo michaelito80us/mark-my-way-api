@@ -1,22 +1,28 @@
-<h1><%= @stop.name %></h1>
+<div class="container">
+  <h1><%= @stop.name %></h1>
 
-<div class="row container">
-<p>id: <%= @stop.id %></p>
-<p>name: <%= @stop.name %></p>
-<p>addres: <%= @stop.address %></p>
-<p>category <%= @stop.category %></p>
-<p>latitude <%= @stop.lat %></p>
-<p>longitude <%= @stop.lon %></p>
-<p>photo1 <a href="<%= @stop.photo1 %>"><%= @stop.photo1 %></a></p>
-<p>photo2 <a href="<%= @stop.photo2 %>"><%= @stop.photo2 %></a></p>
-<p>photo3 <a href="<%= @stop.photo3 %>"><%= @stop.photo3 %></a></p>
-<p>visit time: <%= @stop.visit_time %></p>
-<p>introduction: <%= @stop.introduction %></p>
-  
+  <div class="container">
+    <p>id: <%= @stop.id %></p>
+    <p>name: <%= @stop.name %></p>
+    <p>addres: <%= @stop.address %></p>
+    <p>category <%= @stop.category %></p>
+    <p>latitude <%= @stop.lat %></p>
+    <p>longitude <%= @stop.lon %></p>
+    <p>photo1 <a href="<%= @stop.photo1 %>"><%= @stop.photo1 %></a></p>
+    <p>photo2 <a href="<%= @stop.photo2 %>"><%= @stop.photo2 %></a></p>
+    <p>photo3 <a href="<%= @stop.photo3 %>"><%= @stop.photo3 %></a></p>
+    <p>visit time: <%= @stop.visit_time %></p>
+    <p>introduction: <%= @stop.introduction %></p>
+
+    <% @stop.images.each do |photo| %>
+      <%= image_tag photo, height: 300, width: 400 %>
+    <% end %>
+    
+  </div>
+
+  <small class="text-right flex-shrink-0"><%= link_to 'delete', stop_path(@stop), method: :delete, data: { confirm: "Are you sure you want to remove #{@stop.name} from your list"}, class: 'text-danger' %></small>
+<br>
+<br>
+
+  <%= link_to 'Back', stops_path %>
 </div>
-
-<%= simple_form_for(@stop) do |f| %>
-
-  <%= f.input :images, as: :file, input_html: { multiple: true } %>
-  <%= f.button :submit %>
-<% end %>
