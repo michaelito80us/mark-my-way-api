@@ -26,6 +26,12 @@ before_action :set_stop, only: [:edit, :show, :update, :destroy]
     redirect_to stops_path, notice: 'Stop was successfully destroyed.'
   end
 
+  def delete_image_attachment
+    @image = ActiveStorage::Blob.find_signed(params[:id])
+    @image.attachments.first.purge
+    redirect_back fallback_location: stops_path
+  end
+
   def update
     if @stop.update(stop_params)
       redirect_to @stop, notice: 'Stop was successfully updated.'

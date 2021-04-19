@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
 
   post '/login', to: 'login#login'
-  resources :stops
+  resources :stops do
+    member do
+      delete :delete_image_attachment
+    end
+  end
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

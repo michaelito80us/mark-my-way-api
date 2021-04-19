@@ -1,4 +1,5 @@
 <h1><%= @stop.name %></h1>
+<%= link_to 'Back', stops_path %>
 
 <div class="container">
 <p>id: <%= @stop.id %></p>
@@ -18,13 +19,14 @@
   <% @stop.images.each do |photo| %>
       <%= image_tag photo, height: 300, width: 400 %>
       <%= url_for(photo) %>
-      <%= link_to 'Delete photo', photo.purge %>
+      <%= link_to 'Delete photo', delete_image_attachment_stop_url(photo.signed_id),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } %>
     <% end %>
-
-  <div class="form-actions">
+  <br> <br>
+  <div class="form-actions btn btn-outline-secondary mb-3">
     <%= f.button :submit %>
   </div><% end %>
   
 </div>
 
-<%= link_to 'Back', stops_path %>
