@@ -3,6 +3,7 @@ before_action :set_stop, only: [:edit, :show, :update, :destroy]
 
   def index
     @stops = Stop.all
+    @stops = @stops.sort_by(&:id)
   end  
 
   def show
