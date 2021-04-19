@@ -18,7 +18,6 @@
 
   <% @stop.images.each do |photo| %>
       <%= image_tag photo, height: 300, width: 400 %>
-      <%= url_for(photo) %>
       <%= link_to 'Delete photo', delete_image_attachment_stop_url(photo.signed_id),
                     method: :delete,
                     data: { confirm: 'Are you sure?' } %>

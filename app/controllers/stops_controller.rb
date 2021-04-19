@@ -33,6 +33,7 @@ before_action :set_stop, only: [:edit, :show, :update, :destroy]
   end
 
   def update
+    
     if @stop.update(stop_params)
       redirect_to @stop, notice: 'Stop was successfully updated.'
     else

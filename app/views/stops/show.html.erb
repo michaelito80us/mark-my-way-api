@@ -18,8 +18,7 @@
 
     <% @stop.images.each do |photo| %>
       <%= image_tag photo, height: 300, width: 400 %>
-      <p>url_for :  <%= url_for(photo) %> <br></p>
-      <p>service_url : <%= photo.service_url %></p>
+      <p>url : <%= photo.service_url %></p>
     <% end %>
     
   </div>
