@@ -1,7 +1,9 @@
 <div class="container">
-  <h1><%= @stop.name %></h1>
+  <h1 class="d-flex justify-content-between pt-5"><%= @stop.name %>   <small class="text-right flex-shrink-0 btn btn-danger"><%= link_to 'delete STOP', stop_path(@stop), method: :delete, data: { confirm: "Are you sure you want to remove #{@stop.name} from your list"}, class: 'text-dark' %></small></h1>
+  <%= link_to 'Back  |  ', stops_path %>
+  <%= link_to 'Edit', edit_stop_path(@stop) %>
 
-  <div class="container">
+  <div class="container mt-3">
     <p>id: <%= @stop.id %></p>
     <p>name: <%= @stop.name %></p>
     <p>addres: <%= @stop.address %></p>
@@ -22,7 +24,7 @@
     
   </div>
 
-  <small class="text-right flex-shrink-0 btn btn-danger"><%= link_to 'delete STOP', stop_path(@stop), method: :delete, data: { confirm: "Are you sure you want to remove #{@stop.name} from your list"}, class: 'text-dark' %></small>
+ 
 <br>
 <br>
 
