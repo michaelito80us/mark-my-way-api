@@ -49,8 +49,8 @@ class Api::V1::TripsController < Api::V1::BaseController
     # remaining_time_mins = 200
     #########################
 
-    # average human walking speed 83 mts / min
-    walking_speed = 83
+    # average human walking speed 75 mts / min
+    walking_speed = 75
 
     # create the origin stop - where the user is when he creates the trip
     @stop0 = Stop.create(lat: point_lat, lon: point_lon)
