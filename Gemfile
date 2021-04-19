@@ -31,6 +31,7 @@ gem 'activestorage-aliyun'
 gem 'image_processing'
 gem 'simple_form'
 gem 'bootstrap', '~> 4.6.0'
+gem 'uri'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
