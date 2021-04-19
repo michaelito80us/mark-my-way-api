@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th></th>
+        <th>visit time</th>
       </tr>
     </thead>
   <% n = 1 %>
@@ -14,6 +14,7 @@
       <% @stops.each do |stop1| %>
         <tr>
           <td><%= n %>. - <%= stop1.id %> - <%= stop1.name %></td>
+          <td><%= stop1.visit_time %> mins</td>
           <td><%= link_to 'Show', stop1 %></td>
           <td><%= link_to 'Edit', edit_stop_path(stop1) %></td>
         </tr>
