@@ -11,8 +11,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :trips, only: %i[create show update]
+      resources :trips, only: %i[create show update] 
       resources :stops, only: %i[show update]
+      get 'users/:user_id/last_trip', to: 'trips#last_trip'
     end
   end
 end

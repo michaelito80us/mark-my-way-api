@@ -25,6 +25,11 @@ class Api::V1::TripsController < Api::V1::BaseController
   def show
   end
 
+  def last_trip
+    @trip = Trip.where(user_id: params[:user_id]).last
+  end
+  
+
   def update
     if @trip.update(trip_params)
       render json: { msg: 'Updated' }
