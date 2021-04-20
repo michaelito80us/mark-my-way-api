@@ -16,7 +16,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       @my_trip.each do |stop|
         TripStop.create(stop_id: stop.id, trip: @trip)
       end
-      # render json: { msg: 'Created', trip_id: @trip.id }
+      render json: { msg: 'Created', trip_id: @trip.id }
     else
       render_error(@trip)
     end
