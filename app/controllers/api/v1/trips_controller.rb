@@ -138,7 +138,7 @@ class Api::V1::TripsController < Api::V1::BaseController
   
 
   def trip_params
-    params.require(:trip).permit(:duration, :start_lat, :start_lon, :user_id)
+    params.require(:trip).permit(:duration, :start_lat, :start_lon, :user_id, :active)
   end
 
   def set_trip
