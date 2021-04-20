@@ -23,8 +23,6 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def show
-    p 'here'
-    p @trip
   end
 
   def update
@@ -122,10 +120,22 @@ class Api::V1::TripsController < Api::V1::BaseController
       puts '*********************'
     end
     @stop0.destroy
+    @my_trip = sort_stops
     @my_trip
   end
 
   private
+
+  def sort_stops
+    # calculate the distance from origin to each stop in the trip to sort them
+    @my_trip.delete_at(0)
+    @my_trip.each do |stop|
+      stop.total_time = Geocoder::Calculations.distance_between([@trip.start_lat, @trip.start_lon], [stop.lat, stop.lon]) * 1_000
+    end
+    @my_sorted_trip =@my_trip.sort_by(&:total_time)
+    return @my_sorted_trip
+  end
+  
 
   def trip_params
     params.require(:trip).permit(:duration, :start_lat, :start_lon, :user_id)
