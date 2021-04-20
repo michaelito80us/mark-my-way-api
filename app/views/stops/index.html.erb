@@ -7,6 +7,7 @@
       <tr>
         <th>Name</th>
         <th>visit time</th>
+        <th>Category</th>
       </tr>
     </thead>
   <% n = 1 %>
@@ -15,6 +16,7 @@
         <tr>
           <td><%= n %>. - <%= stop1.id %> - <%= stop1.name %></td>
           <td><%= stop1.visit_time %> mins</td>
+          <td><%= stop1.category %></td>
           <td><%= link_to 'Show', stop1 %></td>
           <td><%= link_to 'Edit', edit_stop_path(stop1) %></td>
         </tr>
