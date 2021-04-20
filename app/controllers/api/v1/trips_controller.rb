@@ -103,7 +103,7 @@ class Api::V1::TripsController < Api::V1::BaseController
 
       ### if its more than 10: n = calculate what is the nearest integer to 33% of the size
       ### if its 10 or less: n = the size af the array_of_locs
-      n = sorted_locs.size > 10 ? (sorted_locs.size / 4).ceil : 3
+      n = sorted_locs.size > 10 ? (sorted_locs.size / 3).ceil : sorted_locs.size
 
       ### randomly choose between the first n stops
       if n != 0
