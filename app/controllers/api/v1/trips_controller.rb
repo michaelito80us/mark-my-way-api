@@ -6,7 +6,7 @@ class Api::V1::TripsController < Api::V1::BaseController
   # end
 
   def create
-    @categories = params[:categories][:categories]
+    @categories = params[:categories]
     @trip = Trip.new(trip_params)
     @trip.current_stop = 0
     @trip.active = false
