@@ -6,6 +6,7 @@ class Api::V1::TripsController < Api::V1::BaseController
   # end
 
   def create
+    @categories = params[:categories][:categories]
     @trip = Trip.new(trip_params)
     @trip.current_stop = 0
     @trip.active = false
@@ -74,7 +75,11 @@ class Api::V1::TripsController < Api::V1::BaseController
 
       #### find the array of locations between [start_lat,start_lon] and the max_distance_mts
       # locations = array_of_locs(start_lat, start_lon, max_distance_mts)
-      locations = Stop.all
+
+      # I have @categories - an array of selected categories
+      # if @categories is empty -> select all stops. else: select only the stops within the categories
+      # need to select only the locations that in the categories is any of the items in the array
+      locations = @categories.empty? ? Stop.all : Stop.where({ category: @categories})
 
       ### remove the trip stops already selected for the trip from the locations array
       # ********* this asumes the origin is not a location on our database.
@@ -103,10 +108,10 @@ class Api::V1::TripsController < Api::V1::BaseController
 
       ### if its more than 10: n = calculate what is the nearest integer to 33% of the size
       ### if its 10 or less: n = the size af the array_of_locs
-      n = sorted_locs.size > 10 ? 10 : (sorted_locs.size / 2)
+      n = sorted_locs.size > 10 ? 10 : ((sorted_locs.size / 2) + 1)
 
       ### randomly choose between the first n stops
-      if n != 0
+      if sorted_locs.size != 0
         next_stop = sorted_locs[rand(0...n)]
 
         @my_trip << next_stop
@@ -123,6 +128,12 @@ class Api::V1::TripsController < Api::V1::BaseController
 
       puts "remaining time: #{remaining_time_mins}"
       puts '*********************'
+
+      if sorted_locs.size.zero?
+        puts "no more locations. bye bye"
+        break
+      end
+
     end
     @stop0.destroy
     @my_trip = sort_stops
@@ -144,6 +155,10 @@ class Api::V1::TripsController < Api::V1::BaseController
 
   def trip_params
     params.require(:trip).permit(:duration, :start_lat, :start_lon, :user_id, :active)
+  end
+
+  def categories_params
+    params.permit(categories: [])
   end
 
   def set_trip
