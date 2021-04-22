@@ -32,7 +32,7 @@ class Api::V1::TripsController < Api::V1::BaseController
     if !@user.trips.empty?
       @trip = Trip.where(user_id: params[:user_id]).last
     else
-      render json: { msg: 'new user' }
+      @trip = Trip.new(active: false)
     end
   end
   
