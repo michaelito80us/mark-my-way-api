@@ -28,7 +28,11 @@ class Api::V1::TripsController < Api::V1::BaseController
   end
 
   def last_trip
-    @trip = Trip.where(user_id: params[:user_id]).last
+    if Trip.where(user_id: params[:user_id]).exist?
+      @trip = Trip.where(user_id: params[:user_id]).last
+    else
+      render json: { msg: 'new user' }
+    end
   end
   
 
