@@ -32,6 +32,7 @@ class Api::V1::TripsController < Api::V1::BaseController
       @trip = Trip.where(user_id: params[:user_id]).last
     else
       render json: { msg: 'new user' }
+    end
   end
   
 
